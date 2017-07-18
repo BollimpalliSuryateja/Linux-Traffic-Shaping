@@ -1,17 +1,24 @@
 #!/usr/bin/python
 
 ## main shaper script that will be used for changing the shaper traffic settings
-import MySQLdb, os, subprocess
+import MySQLdb, os, subprocess, socketUp
 from flask import Flask
 from flask import request
 app = Flask(__name__)
 
+ip = socket.gethostbyname(socket.gethostname())
+
+
+@app.route('/',methods=['GET'])
+def url():
+	return "\n\nRequest Denied...\nCheck your URL and try again...\n\n"
+
 @app.route('/interfaces', methods=['GET'])
 def ifaces():
 	i = subprocess.check_output("ls /sys/class/net",shell=True)
-	return "Availabale Interfaces in shaper ("+ip+") are :\n"+i
+	return "\nAvailabale Interfaces in shaper ("+ip+") are :\n"+i+"\n"
 
-@app.route('/traffic', methods=['GET', 'POST'])
+@app.route('/traffic', methods=['GET'])
 def check_traffic():
 	if(request.args.get('iface')):
 		interface = request.args.get('iface')
@@ -25,10 +32,12 @@ def check_traffic():
         		delay_value = j[a] 
         		if jtr < len(j):
             			if j[jtr] != "loss":
-                			jtr = jtr + 1
+					jtr = jtr + 1
                 			jitter_value = j[jtr] 
 				else:
 					jitter_value = "0ms"
+			else:
+				jitter_value = "0ms"
 		else:
 			delay_value = "0ms"
 			jitter_value = "0ms"
@@ -37,8 +46,11 @@ def check_traffic():
        			b = b + 1
        			loss_value = j[b] 
 		else:
-			loss_value = "0%"	
-		return "\nDelay: "+delay_value+"\nJitter: "+jitter_value+"\nLoss: "+loss_value 
+			loss_value = "0%"
+			
+		return "Traffic on the interface ("+interface+") is as below:\nDelay: "+delay_value+"\nJitter: "+jitter_value+"\nLoss: "+loss_value+"\n"
+	else:
+		return "\n\nRequest Denied...\nMention the interface on which traffic should be viewed and try again...\n\n" 
 
 @app.route('/shaping', methods=['GET', 'POST'])
 def traffic():
