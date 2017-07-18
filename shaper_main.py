@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 ## main shaper script that will be used for changing the shaper traffic settings
-import MySQLdb, os, subprocess, socketUp
+import MySQLdb, os, subprocess, socket
 from flask import Flask
 from flask import request
 app = Flask(__name__)
