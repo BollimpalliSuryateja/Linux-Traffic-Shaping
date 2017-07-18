@@ -1,11 +1,44 @@
 #!/usr/bin/python
 
 ## main shaper script that will be used for changing the shaper traffic settings
-import MySQLdb, os
+import MySQLdb, os, subprocess
 from flask import Flask
 from flask import request
 app = Flask(__name__)
 
+@app.route('/interfaces', methods=['GET'])
+def ifaces():
+	i = subprocess.check_output("ls /sys/class/net",shell=True)
+	return "Availabale Interfaces in shaper ("+ip+") are :\n"+i
+
+@app.route('/traffic', methods=['GET', 'POST'])
+def check_traffic():
+	if(request.args.get('iface')):
+		interface = request.args.get('iface')
+		cmd = "sudo tc qdisc show dev "+interface
+		i = subprocess.check_output(cmd,shell=True)
+		j = i.split(' ')
+    		d,l,jtr = "delay","loss",10
+    		if d in j:
+        		a = j.index('delay')
+        		a = a + 1
+        		delay_value = j[a] 
+        		if jtr < len(j):
+            			if j[jtr] != "loss":
+                			jtr = jtr + 1
+                			jitter_value = j[jtr] 
+				else:
+					jitter_value = "0ms"
+		else:
+			delay_value = "0ms"
+			jitter_value = "0ms"
+    		if l in j:
+        		b = j.index('loss')
+       			b = b + 1
+       			loss_value = j[b] 
+		else:
+			loss_value = "0%"	
+		return "\nDelay: "+delay_value+"\nJitter: "+jitter_value+"\nLoss: "+loss_value 
 
 @app.route('/shaping', methods=['GET', 'POST'])
 def traffic():
