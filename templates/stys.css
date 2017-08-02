@@ -1,0 +1,48 @@
+<style>
+
+a:hover {
+    background: #FFDD00;
+    color: #AAAAAA;
+}
+
+.fieldset-auto-width {
+         display: inline-block;
+    }
+
+form {
+    margin: auto;
+    width: 400px;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+div.p1 {
+    padding: 16px;
+    font-size: 24px;
+    margin: auto;
+    width: 400px;
+}
+</style>
+
