@@ -1,0 +1,23 @@
+<html>
+<head>
+<link rel="stylesheet" href="stys.css">
+</head>
+<body style="background-color:#EAFAF1">
+<form action="http://localhost:5000/change_traffic" method="POST">
+  <fieldset>
+  <legend><big><b>&nbsp Traffic shaping:&nbsp <b></big></legend>
+  <div class="p1">
+    <label style="font-size:22px"><b>IP Address:</b></label>
+    <input type="text" placeholder="Enter the IP Address" name="ip" required>
+    <label style="font-size:22px"><b>Interface:</b></label>
+    <input type="text" placeholder="Enter the Interface" name="iface" required>
+    <label style="font-size:22px"><b>Traffic Constraints:</b></label>
+    <input type="text" placeholder="Enter the delay constraint with units" name="dlay">
+    <input type="text" placeholder="Enter the jitter constraint with units" name="jitter">
+    <input type="text" placeholder="Enter the loss constraint with %" name="loss">
+    <button type="submit"> change traffic</button>
+    </div>
+   </fieldset>
+</form>
+</body>
+</html>
