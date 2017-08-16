@@ -1,0 +1,12 @@
+#goto cd /etc/init
+#note put name in xxxx.conf
+
+start on runlevel [2345]
+stop on runlevel [06]
+
+respwan
+
+chdir /home/user/desktop/pfolder
+
+exec python shaper.py 
+
